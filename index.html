@@ -20,6 +20,12 @@
     padding-top: 0.75em;font-variant-caps: small-caps;">current version: 1.1.0</center>
         </div>
         <form id="bookbinder" name="bookbinder">
+            <div class="section">
+                <h2>Beginner-friendly View</h2>
+                <span class="row"><input type="checkbox" name="beginner" id="beginner" onclick="setBeginnerView()"/>
+                    <label>This will hide the more advanced options such as source manipulation and wacky layouts,
+                        as well as assume your layout is a folio with default positioning and scaling.</label></span>
+            </div>
             <div class="section" id="input">
                 <h2>File Info</h2>
                 <span class="row"><label>Input File: <input type="file" name="input_file" accept=".pdf"
@@ -30,7 +36,7 @@
                 <span class="row" style="padding: 10px;font-style: italic;">While some PDF viewers may display the first two pages as a spread, be aware that the first page, which is odd, will be on the right when printed. The first printed spread are pages 2 & 3 of your PDF document. Evens always on the left, odds always on the right.</span>
             </div>
 
-            <div class="section" id="input">
+            <div class="section intermediate" id="input">
                 <h2>Source Manipulation</h2>
 
                 <span class="row"><input type="radio" id="none" name="source_rotation" value="none" checked>
@@ -88,7 +94,7 @@
                         <option label="Centimeters" value="cm"/>
                     </select>
                 </span>
-                <span class="row" style="padding-left: 20pt;font-style: italic;">
+                <span class="row intermediate" style="padding-left: 20pt;font-style: italic;">
                     <label for="paper_size_unit">dimensions for CUSTOM: </label>
                     <input type="number" id="paper_size_custom_width" name="paper_size_custom_width" style="width:4em;"> x 
                     <input type="number" id="paper_size_custom_height" name="paper_size_custom_height" style="width:4em;"> (in Points) <span data-balloon-length="medium" aria-label="The CUSTOM option in drop down will only appear if valid dimensions are provided. Points are the unit the system/code works in. Luckily Google can help you convert cm or inches into Points quite easily!" data-balloon-pos="up">ℹ️</span>
@@ -101,17 +107,17 @@
                     </select>
                     <span data-balloon-length="medium" aria-label="Duplex will alternate front and backs of sheets in a single file; Single-sided will split fronts and backs into seperate files." data-balloon-pos="up">ℹ️</span>
                 </span>
-                <span class="row">
+                <span class="row intermediate">
                     <label for="paper_rotation_90">Rotate Paper 90° <input type="checkbox" name="paper_rotation_90" id="paper_rotation_90"></label>
                     <span data-balloon-length="medium" aria-label="This puts your paper in 'landscape' -- layout still happens the same, but the porportions of things will be different" data-balloon-pos="up">ℹ️</span>
                 </span>
 
-                <span class="row"> <label>Alternate Page Rotation (AKA Flip on Long Side)<input type="checkbox" name="rotate_page"></label> <span id="folio_warning"><b>NOTE:</b> Not currently working for folios, sorry! Use the <a href="old/">old version</a> for now.</a></span></span>
+                <span class="row intermediate"> <label>Alternate Page Rotation (AKA Flip on Long Side)<input type="checkbox" name="rotate_page"></label> <span id="folio_warning"><b>NOTE:</b> Not currently working for folios, sorry! Use the <a href="old/">old version</a> for now.</a></span></span>
                 
 
             </div>
 
-            <div class="section" id="book_size">
+            <div class="section intermediate" id="book_size">
                 <h2>Page Layout</h2>
                 <span class="row"><input type="radio" id="folio" name="pagelayout" value="folio" checked>
                     <label for="folio">Folio (two pages per side of sheet)</label></span>
@@ -222,13 +228,13 @@
                 <!-- <span class="row"><label>Default signature length: </label><input type="text" placeholder="8" name="sig_length"></label></span> -->
                 <!-- <span class="row"> <input type="radio" id="booklet" name="sig_format" value="booklet">
                     <label for="booklet">Booklet</label></span> -->
-                <span class="row"> <input type="radio" id="perfect" name="sig_format" value="perfect">
+                <span class="row intermediate"> <input type="radio" id="perfect" name="sig_format" value="perfect">
                     <label for="perfect">Perfectbound</label></span>
                 <span class="row"> <input type="radio" id="standardsig" name="sig_format" value="standardsig" checked>
                     <label for="standardsig">Standard signatures</label> - length </label><input type="number" value="8"
                         name="sig_length"></label> 
                         <span data-balloon-length="medium" aria-label="Number of sheets per signature" data-balloon-pos="up">ℹ️</span></span>
-                <span class="row"> <input type="radio" id="customsig" name="sig_format" value="customsig">
+                <span class="row intermediate"> <input type="radio" id="customsig" name="sig_format" value="customsig">
                     <label for="customsig">Custom signatures</label> <input type="text" name="custom_sig">
                     <span data-balloon-length="medium" aria-label="Specify as a set of numbers seperated by commas, such as: 10, 10, 8" data-balloon-pos="up">ℹ️</span>
                     <span class="row">
@@ -238,7 +244,7 @@
                         In this code, the length of a signature is the number of full-sized sheets of paper per signature. For a folio book, this means that the number of folds you punch through when sewing together a signature is the same as the number of sheets in the signature, as each sheet has one fold. For quarto, this will be two folds for each sheet - octavo, four; sextodecimo, eight. Calculate your signature lengths accordingly (in particular, you almost certainly don't want more than one sheet for sextodecimo).
                     </p>
                     </details></span>
-
+                <div class="intermediate">
                 <h3>Wacky Small Layouts</h3>
                 <span class="row" style="margin-bottom:15px;"><i>These layouts contain one or more signature per printed page. They use only the "File Info" and "Printer" settings. The names are arbitrary and hold no standardized meaning.</i></span>
                 <span class="row" style="text-align: left; float:left;">Fore-Edge Padding: <br><input type="number" id="fore_edge_padding_pt" name="fore_edge_padding_pt" style="width: 5em;margin-left: 15px;"> pt</span>
@@ -347,6 +353,7 @@
                         Note that when folding, it's important for the <b>center of the folios to line up</b>. That's what I measure against (less so fretting about folding exactly at the edge). Remember! Printer skew is a real thing!
                         </p>
                     </details></span>
+                    </div>
             </div>
 
             <div class="section" id="sig_info">

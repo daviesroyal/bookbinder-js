@@ -148,3 +148,6 @@ body, .wrapper, #bookbinder {
     display: inline-block;
     vertical-align: top;
 }
+.indtermediate {
+    visibility: visible;
+}
